@@ -9,4 +9,4 @@ branding:
   color: 'blue'
 runs:
   using: 'node12'
-  main: './action.js'
+  main: 'index.js'
