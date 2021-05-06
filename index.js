@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 const endpoint = "teamwork.com/projects/api/v3/notebooks/"
-let url = "https://" + core.getInput(domain) + "." + endpoint + core.getInput('notebook_id') + '.json';
+let url = "https://" + core.getInput('domain') + "." + endpoint + core.getInput('notebook_id') + '.json';
 
 var xhrGet = new XMLHttpRequest();
 xhrGet.withCredentials = true;
