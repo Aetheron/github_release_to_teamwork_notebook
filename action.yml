@@ -1,0 +1,12 @@
+name: 'GitHub Release to Teamwork Notebook'
+description: 'Automatically updates a Teamwork notebook with release info'
+inputs:
+  notebook_id:
+    description: The ID of the notebook to update in Teamwork
+    required: true
+branding:
+  icon: 'book'
+  color: 'blue'
+runs:
+  using: 'node12'
+  main: './action.js'
