@@ -4,6 +4,9 @@ inputs:
   notebook_id:
     description: The ID of the notebook to update in Teamwork
     required: true
+  domain:
+    description: The domain of your Teamwork site. Follows the format <company>.teamwork.com for US sites, or <company>.eu.teamwork.com for EU sites
+    required: true
 branding:
   icon: 'book'
   color: 'blue'
