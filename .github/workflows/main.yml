@@ -1,4 +1,4 @@
-name: CI
+name: Test the Action
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - uses: Aetheron/github_release_to_teamwork_notebook@latest
+      - uses: Aetheron/github_release_to_teamwork_notebook@main
