@@ -5,14 +5,13 @@ const endpoint = "/projects/api/v3/notebooks/"
 let url = "https://" + core.getInput('domain') + endpoint + core.getInput('notebook_id') + '.json';
 
 // Send GET request to get the current contents of the notebook
-let getHeaders = new Headers();
-getHeaders.append("Authorization", `Basic ${core.getInput('api_key')}`);
-getHeaders.append("Accept", "application/json");
-getHeaders.append("Content-Type", "application/json");
-
 const getOpts = {
   method: 'GET',
-  headers: getHeaders,
+  headers: {
+    'Authorization': `Basic ${core.getInput('api_key')}`,
+    'Accept': "application/json",
+    'Content-Type': "application/json"
+  },
   redirect: 'follow'
 };
 
@@ -21,11 +20,6 @@ fetch(url, getOpts)
   .then(data => console.log(data));
 
 // Send PATCH request to append the new release tag to the notebook
-let patchHeaders = new Headers();
-patchHeaders.append("Authorization", `Basic ${core.getInput('api_key')}`);
-patchHeaders.append("Accept", "application/json");
-patchHeaders.append("Content-Type", "application/json");
-
 let data = `{
   "notebook": {
     "newVersion": true,
@@ -37,7 +31,11 @@ let data = `{
 
 const patchOpts = {
   method: 'PATCH',
-  headers: patchHeaders,
+  headers: {
+    'Authorization': `Basic ${core.getInput('api_key')}`,
+    'Accept': "application/json",
+    'Content-Type': "application/json"
+  },
   redirect: 'follow',
   body: data,
 };
