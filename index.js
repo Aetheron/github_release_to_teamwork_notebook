@@ -4,40 +4,29 @@ const github = require('@actions/github');
 const endpoint = "teamwork.com/projects/api/v3/notebooks/"
 let url = "https://" + core.getInput('domain') + "." + endpoint + core.getInput('notebook_id') + '.json';
 
-var xhrGet = new XMLHttpRequest();
-xhrGet.withCredentials = true;
+// Send GET request to get the current contents of the notebook
+let headers = new Headers();
+headers.append("Authorization", `Basic ${core.getInput('api_key')}`);
+headers.append("Accept", "application/json");
+headers.append("Content-Type", "application/json");
 
-xhrGet.onreadystatechange = function () {
-  if (xhrGet.readyState === 4) {
-    console.log(xhrGet.status);
-    console.log(xhrGet.response);
-  }
+const opts = {
+  method: 'GET',
+  headers: headers,
+  redirect: 'follow'
 };
 
-// Send GET request to get the current contents of the notebook
-xhrGet.open("GET", url);
-xhrGet.setRequestHeader("Authorization", "Basic dHdwX3Vxd2J6ZEg3YUh4NGtveGlMQ05uOXN6RzV3SFk6MQ==");
-xhrGet.setRequestHeader("Accept", "application/json");
-xhrGet.setRequestHeader("Content-Type", "application/json");
-xhrGet.send();
+fetch(url, opts)
+  .then(response => response.json())
+  .then(data => console.log(data));
 
 // Send PATCH request to append the new release tag to the notebook
-var xhrPatch = new XMLHttpRequest();
-xhrPatch.withCredentials = true;
+let headers = new Headers();
+headers.append("Authorization", `Basic ${core.getInput('api_key')}`);
+headers.append("Accept", "application/json");
+headers.append("Content-Type", "application/json");
 
-xhrPatch.onreadystatechange = function () {
-  if (xhrGet.readyState === 4) {
-    console.log(xhrPatch.status);
-    console.log(xhrPatch.response);
-  }
-};
-
-xhrPatch.open("PATCH", url);
-xhrPatch.setRequestHeader("Authorization", "Basic dHdwX3Vxd2J6ZEg3YUh4NGtveGlMQ05uOXN6RzV3SFk6MQ==");
-xhrPatch.setRequestHeader("Accept", "application/json");
-xhrPatch.setRequestHeader("Content-Type", "application/json");
-
-var data = `{
+let data = `{
   "notebook": {
     "newVersion": true,
     "contents": "
@@ -46,4 +35,13 @@ var data = `{
   }
 }`;
 
-xhrPatch.send(data);
+const opts = {
+  method: 'PATCH',
+  headers: headers,
+  redirect: 'follow',
+  body: data,
+};
+
+fetch(url, opts)
+  .then(response => response.json())
+  .then(data => console.log(data));

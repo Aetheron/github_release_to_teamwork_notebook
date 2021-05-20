@@ -20,3 +20,4 @@ jobs:
         with:
           notebook_id: 31563
           domain: fusionary.teamwork.com
+          api_key: ${{ secrets.TEAMWORK_API_KEY }}
