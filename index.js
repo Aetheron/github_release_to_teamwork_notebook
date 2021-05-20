@@ -1,17 +1,15 @@
-const btoa = require('btoa');
 const core = require('@actions/core');
 const fetch = require('node-fetch');
 const github = require('@actions/github');
 
 const endpoint = "/projects/api/v3/notebooks/"
 let url = "https://" + core.getInput('domain') + endpoint + core.getInput('notebook_id') + '.json';
-const token = btoa(core.getInput('api_key') + ':1');
 
 // Send GET request to get the current contents of the notebook
 const getOpts = {
   method: 'GET',
   headers: {
-    'Authorization': `Basic ${token}`,
+    'Authorization': `Basic ${core.getInput('api_key')}`,
     'Accept': "application/json",
     'Content-Type': "application/json"
   },
