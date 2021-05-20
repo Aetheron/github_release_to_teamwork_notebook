@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const endpoint = "teamwork.com/projects/api/v3/notebooks/"
-let url = "https://" + core.getInput('domain') + "." + endpoint + core.getInput('notebook_id') + '.json';
+const endpoint = "/projects/api/v3/notebooks/"
+let url = "https://" + core.getInput('domain') + endpoint + core.getInput('notebook_id') + '.json';
 
 // Send GET request to get the current contents of the notebook
 let getHeaders = new Headers();
@@ -10,13 +10,13 @@ getHeaders.append("Authorization", `Basic ${core.getInput('api_key')}`);
 getHeaders.append("Accept", "application/json");
 getHeaders.append("Content-Type", "application/json");
 
-const opts = {
+const getOpts = {
   method: 'GET',
   headers: getHeaders,
   redirect: 'follow'
 };
 
-fetch(url, opts)
+fetch(url, getOpts)
   .then(response => response.json())
   .then(data => console.log(data));
 
@@ -35,13 +35,13 @@ let data = `{
   }
 }`;
 
-const opts = {
+const patchOpts = {
   method: 'PATCH',
   headers: patchHeaders,
   redirect: 'follow',
   body: data,
 };
 
-fetch(url, opts)
+fetch(url, patchOpts)
   .then(response => response.json())
   .then(data => console.log(data));
