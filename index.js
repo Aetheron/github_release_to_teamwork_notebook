@@ -5,14 +5,14 @@ const endpoint = "teamwork.com/projects/api/v3/notebooks/"
 let url = "https://" + core.getInput('domain') + "." + endpoint + core.getInput('notebook_id') + '.json';
 
 // Send GET request to get the current contents of the notebook
-let headers = new Headers();
-headers.append("Authorization", `Basic ${core.getInput('api_key')}`);
-headers.append("Accept", "application/json");
-headers.append("Content-Type", "application/json");
+let getHeaders = new Headers();
+getHeaders.append("Authorization", `Basic ${core.getInput('api_key')}`);
+getHeaders.append("Accept", "application/json");
+getHeaders.append("Content-Type", "application/json");
 
 const opts = {
   method: 'GET',
-  headers: headers,
+  headers: getHeaders,
   redirect: 'follow'
 };
 
@@ -21,10 +21,10 @@ fetch(url, opts)
   .then(data => console.log(data));
 
 // Send PATCH request to append the new release tag to the notebook
-let headers = new Headers();
-headers.append("Authorization", `Basic ${core.getInput('api_key')}`);
-headers.append("Accept", "application/json");
-headers.append("Content-Type", "application/json");
+let patchHeaders = new Headers();
+patchHeaders.append("Authorization", `Basic ${core.getInput('api_key')}`);
+patchHeaders.append("Accept", "application/json");
+patchHeaders.append("Content-Type", "application/json");
 
 let data = `{
   "notebook": {
@@ -37,7 +37,7 @@ let data = `{
 
 const opts = {
   method: 'PATCH',
-  headers: headers,
+  headers: patchHeaders,
   redirect: 'follow',
   body: data,
 };
